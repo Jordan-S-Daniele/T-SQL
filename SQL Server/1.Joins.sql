@@ -1,0 +1,12 @@
+﻿-- MODULO 3-- Tipo de combinación( JOINS)/* INNEREspeciﬁca que se devuelvan todos los pares de  ﬁlas coincidentes. Rechaza las ﬁlas no coincidentes  de las dos tablas. Si no se especiﬁca ningún tipo  de combinación, éste es el valor predeterminado.El siguiente ejemplo muestra los teléfonos  de los empleados con código menor a 10.*/
+
+SELECT a.BusinessEntityID, a.FirstName, b.PhoneNumber  FROM Person.Person a INNER JOIN Person.PersonPhone b  ON a.BusinessEntityID = b.BusinessEntityIDWHERE a.BusinessEntityID < 10
+
+/* LEFT [ OUTER ]Especiﬁca que todas las ﬁlas de la tabla  izquierda que no cumplan la condición de  combinación se incluyan en el conjunto de  resultados, con las columnas de resultados  de la otra tabla establecidas en NULL,  además de todas las ﬁlas devueltas por la  combinación interna.El siguiente ejemplo muestra la cantidad de  órdenes de ventas para los productos 389 y 897.*/SELECT a.ProductID, b.OrderQty  FROM Production.Product a LEFT JOIN  Sales.SalesOrderDetail bON a.ProductID = b.ProductID  WHERE a.ProductID in (389,897)
+
+/* RIGHT [ OUTER ]Especiﬁca que todas las ﬁlas de la tabla  derecha que no cumplan la condición de  combinación se incluyan en el conjunto de  resultados, con las columnas de resultados  de la otra tabla establecidas en NULL,  además de todas las ﬁlas devueltas por la  combinación interna.El siguiente ejemplo muestra la cantidad de  órdenes de compra para los clientes 701 y 11000.*/SELECT s.SalesOrderID, c.CustomerIDFROM Sales.SalesOrderHeader AS s RIGHT JOIN  Sales.Customer AS cON s.CustomerID = c.CustomerID  WHERE C.CustomerID IN (701, 11000)
+
+/* FULL [ OUTER ]Especiﬁca que una ﬁla de la tabla de la derecha o de la  izquierda, que no cumpla la condición de  combinación, se incluya en el conjunto de resultados  y que las columnas que correspondan a la otra tabla  se establezcan en NULL. De esta forma se agregan  más ﬁlas a las que se suelen devolver con INNER JOIN.El siguiente ejemplo muestra la cantidad de órdenes de compra  para los clientes 701 y 11000*/SELECT c.CurrencyRateID, s.SalesOrderID  FROM Sales.SalesOrderHeader AS sFULL OUTER JOIN Sales.CurrencyRate AS c  ON c.CurrencyRateID = s.CurrencyRateIDWHERE (c.CurrencyRateID = 2705 OR s.SalesOrderID IN (56358, 56359));
+
+/* CROSSSe utiliza en los casos que se quiere hacer  el producto cartesiano entre dos tablas.*/SELECT sd.SalesOrderID, sh.SalesOrderID  FROM Sales.SalesOrderDetail sdCROSS JOIN Sales.SalesOrderHeader shWHERE sd.SalesOrderID = 43665 AND sh.SalesOrderID IN  (43662, 43668)
+
